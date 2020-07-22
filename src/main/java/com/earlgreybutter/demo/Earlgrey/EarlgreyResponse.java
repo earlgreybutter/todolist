@@ -3,15 +3,14 @@ package com.earlgreybutter.demo.Earlgrey;
 import java.util.List;
 
 import com.earlgreybutter.demo.ApiResponse.ApiResponse;
-import com.earlgreybutter.demo.Earlgrey.Earlgrey;
 
 import lombok.Builder;
 
-public class EarlgreyResponse extends ApiResponse<Earlgrey> {
+public class EarlgreyResponse extends ApiResponse<EarlgreyDto> {
 // ApiResponse의 T자리에 Earlgrey가 들어갔다.     
     @Builder
-    public EarlgreyResponse(final Earlgrey earlgrey, final List<String> errors){
-        super(earlgrey);
+    public EarlgreyResponse(final EarlgreyDto earlgreyDto, final List<String> errors){
+        super(earlgreyDto);
         this.setErrors(errors);
     }
     // 생성자에서 부모 클래스인 ApiResponse 의 data를 earlgrey 로 초기화 해줌 

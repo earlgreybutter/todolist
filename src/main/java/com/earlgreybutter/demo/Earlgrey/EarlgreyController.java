@@ -16,16 +16,33 @@ public class EarlgreyController {
     @Autowired
     private EarlgreyService earlgreyService;
 
-    @RequestMapping(value = "{/id}", method = RequestMethod.GET)
+    @RequestMapping("/test")
+    public String getTest(){
+        return "test";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public @ResponseBody  EarlgreyResponse get(@PathVariable(value="id") String id){
         List<String> errors = new ArrayList<>();
-        Earlgrey earlgrey = null; 
+        EarlgreyDto earlgreyDto = null; 
         try{
-            earlgrey = earlgreyService.get(id);
+            earlgreyDto = earlgreyService.get(id);
         }
         catch (final Exception e) {
             errors.add(e.getMessage());
         }
-        return EarlgreyAdapter.earlgreyResponse(earlgrey,errors);
+        return EarlgreyAdapter.earlgreyResponse(earlgreyDto,errors);
     } 
+
+    public @ResponseBody List<EarlgreyResponse> getAll(){
+        List<String> errors = new ArrayList<>();
+        List<EarlgreyDto> earlgreyDtos = earlgreyService.getAll();
+        List<EarlgreyResponse> earlgreyResponses = new ArrayList<>();
+        earlgreyDtos.stream().forEach(earlgrey -> {
+            earlgreyResponses.add(EarlgreyAdapter.earlgreyResponse(earlgreyDtos, errors))
+        });
+
+        return earlgreyResponses;
+    }
+
 }
